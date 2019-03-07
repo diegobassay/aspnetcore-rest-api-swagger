@@ -1,0 +1,72 @@
+<clr-main-container>
+  <div class="content-container">
+    <div class="content-area">
+      <p>
+        <button class="btn btn-primary" (click)="openToSave()">Novo funcionário</button>
+        <a class="btn btn-success" href="/swagger">Swagger</a>
+      </p>
+      <clr-modal [(clrModalOpen)]="showEmployeeModal">
+        <h3 class="modal-title">{{employeeModalTitle}}</h3>
+        <div class="modal-body">
+          <form clrForm [formGroup]="employeeForm">
+            <clr-input-container>
+              <label>Nome</label>
+              <input clrInput type="text" formControlName="name" />
+              <clr-control-helper></clr-control-helper>
+              <clr-control-error>Por favor preencha um nome com mais de 3 caracteres.</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+              <label>Email</label>
+              <input clrInput type="email" formControlName="email" />
+              <clr-control-helper></clr-control-helper>
+              <clr-control-error>O email é inválido, por favor informe um email válido.</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+              <label>Idade</label>
+              <input clrInput type="number" formControlName="age" />
+              <clr-control-helper></clr-control-helper>
+              <clr-control-error>O idade é obrigatória, deve ser numérica e maior que zero.</clr-control-error>
+            </clr-input-container>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" (click)="showEmployeeModal = false">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="submit()">Ok</button>
+        </div>
+      </clr-modal>
+
+      <clr-modal [(clrModalOpen)]="showModalRemove">
+        <h3 class="modal-title">Confirmar exclusão</h3>
+        <div class="modal-body">
+          {{textModalRemove}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger-outline btn-sm" (click)="showModalRemove = false">Cancelar</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="remove()">Remover</button>
+        </div>
+      </clr-modal>
+
+      <clr-datagrid>
+        <clr-dg-column>ID</clr-dg-column>
+        <clr-dg-column>Nome</clr-dg-column>
+        <clr-dg-column>Email</clr-dg-column>
+        <clr-dg-column>Idade</clr-dg-column>
+
+        <clr-dg-row *ngFor="let employee of employees" [clrDgItem]="employee">
+          <clr-dg-cell>{{employee.id}}</clr-dg-cell>
+          <clr-dg-cell>{{employee.name}}</clr-dg-cell>
+          <clr-dg-cell>{{employee.email}}</clr-dg-cell>
+          <clr-dg-cell>{{employee.age}}</clr-dg-cell>
+          <clr-dg-action-overflow>
+            <button class="action-item" (click)="openToEdit(employee)">Editar</button>
+            <button class="action-item" (click)="openToDelete(employee)">Deletar</button>
+          </clr-dg-action-overflow>
+        </clr-dg-row>
+        <clr-dg-footer>{{employees.length}} subalternos cadastrados!</clr-dg-footer>
+      </clr-datagrid>
+    </div>
+  </div>
+</clr-main-container>
+
+
+
